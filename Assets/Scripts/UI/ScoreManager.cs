@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -7,8 +7,8 @@ public class ScoreManager : MonoBehaviour
 
     public PlayerShooter playerShooter;
 
-    public Text scoreText;
-    public Text highscoreText;
+    public TMP_Text scoreText;
+    public TMP_Text highscoreText;
 
     int score = 0;
     int highscore = 0;
@@ -28,7 +28,7 @@ public class ScoreManager : MonoBehaviour
     void Awake()
     {
         if (Instance == null) Instance = this;
-        else Destroy(gameObject);
+        else Destroy(this);
     }
 
     void Start()
@@ -64,6 +64,7 @@ public class ScoreManager : MonoBehaviour
     public void ResetScore()
     {
         score = 0;
+        nextUpgradeIndex=0;
         UpdateUI();
     }
 
