@@ -4,7 +4,7 @@ public class TimedObjectDestroyer : MonoBehaviour
 {
     [Header("Timer Settings")]
     [Tooltip("The amount of time (in seconds) before the object this script is attatched to is destroyed.")]
-    [SerializeField] private float lifeTime = 5;
+    [SerializeField] public float lifeTime = 5;
 
     // The amount of time which has passed since this script was initialized.
     private float elapsedTime = 0;
