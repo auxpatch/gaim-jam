@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -69,6 +70,7 @@ public class PlayerHealth : MonoBehaviour
     private void GameOver()
     {
         gameObject.SetActive(false);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     public int GetCurrentLives() => currentLives;

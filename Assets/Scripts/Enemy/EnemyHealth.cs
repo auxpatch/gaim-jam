@@ -3,8 +3,9 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour
 {
     [SerializeField] private float maxHealth = 20f;
-    private float currHealth = 20f;
+    [SerializeField] private int pointValue = 100;
 
+    private float currHealth = 20f;
     private void Start()
     {
         currHealth = maxHealth;
@@ -16,6 +17,10 @@ public class EnemyHealth : MonoBehaviour
         if(currHealth <= 0)
         {
             Destroy(gameObject);
+            if (ScoreManager.Instance != null)
+            {
+                ScoreManager.Instance.AddScore(pointValue);
+            }
         }
     }
 }
