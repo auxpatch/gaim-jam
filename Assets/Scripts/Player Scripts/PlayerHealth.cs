@@ -27,8 +27,9 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage()
     {
-        Debug.Log("PLAYER HEALTH - took damage!");
         if (isInvulnerable) return;
+        Debug.Log("PLAYER HEALTH - took damage!");
+
         currentLives--;
 
         if (currentLives <= 0)
