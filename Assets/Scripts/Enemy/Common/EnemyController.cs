@@ -73,8 +73,8 @@ public class EnemyController : MonoBehaviour
         {
             attackTimer = attackCooldown;
 
-            //BulletStraightDown();
-            RingOfBullets();
+            BulletStraightDown();
+            //RingOfBullets();
         }
     }
 

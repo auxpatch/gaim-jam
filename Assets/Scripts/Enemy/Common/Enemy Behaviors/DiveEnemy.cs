@@ -22,7 +22,7 @@ public class DiveEnemy : MonoBehaviour
     [SerializeField] private float maxLifetime = 15f; // failsafe
 
     private Rigidbody2D rb;
-    private TEMP_player player;
+    private PlayerController player;
 
     private Vector2 pos, dir, target;
     private float speed, sideSign;
@@ -32,7 +32,7 @@ public class DiveEnemy : MonoBehaviour
 
     void Start()
     {
-        player = GameObject.FindAnyObjectByType<TEMP_player>();
+        player = GameObject.FindAnyObjectByType<PlayerController>();
         if (player == null)
         {
             Debug.LogWarning("DiveEnemy: no TEMP_player found in scene.");
