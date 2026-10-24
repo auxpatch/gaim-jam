@@ -70,7 +70,7 @@ public class ScoreManager : MonoBehaviour
 
     void UpdateUI()
     {
-        scoreText.text = score + " POINTS";
+        scoreText.text = "SCORE: " + score;
         highscoreText.text = "HIGHSCORE: " + highscore;
     }
 }
