@@ -136,7 +136,87 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7eaeb5a005611a41b402851660967f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
+  IsBoss: 0
   maxHealth: 20
+  currHealth: 20
+  isInvuln: 0
+--- !u!1001 &167308417
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -7437141485470700116, guid: 81e4ba6c8da56bb4caf04994a8e62d6c, type: 3}
+      propertyPath: maxLives
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 182380988195312023, guid: 81e4ba6c8da56bb4caf04994a8e62d6c, type: 3}
+      propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5907601277403507011, guid: 81e4ba6c8da56bb4caf04994a8e62d6c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 5907601277403507011, guid: 81e4ba6c8da56bb4caf04994a8e62d6c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 5907601277403507011, guid: 81e4ba6c8da56bb4caf04994a8e62d6c, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 5907601277403507011, guid: 81e4ba6c8da56bb4caf04994a8e62d6c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.007827818
+      objectReference: {fileID: 0}
+    - target: {fileID: 5907601277403507011, guid: 81e4ba6c8da56bb4caf04994a8e62d6c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.7909343
+      objectReference: {fileID: 0}
+    - target: {fileID: 5907601277403507011, guid: 81e4ba6c8da56bb4caf04994a8e62d6c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5907601277403507011, guid: 81e4ba6c8da56bb4caf04994a8e62d6c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5907601277403507011, guid: 81e4ba6c8da56bb4caf04994a8e62d6c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5907601277403507011, guid: 81e4ba6c8da56bb4caf04994a8e62d6c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5907601277403507011, guid: 81e4ba6c8da56bb4caf04994a8e62d6c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5907601277403507011, guid: 81e4ba6c8da56bb4caf04994a8e62d6c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5907601277403507011, guid: 81e4ba6c8da56bb4caf04994a8e62d6c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5907601277403507011, guid: 81e4ba6c8da56bb4caf04994a8e62d6c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5907601277403507011, guid: 81e4ba6c8da56bb4caf04994a8e62d6c, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 81e4ba6c8da56bb4caf04994a8e62d6c, type: 3}
 --- !u!1 &372338774
 GameObject:
   m_ObjectHideFlags: 0
@@ -151,6 +231,7 @@ GameObject:
   - component: {fileID: 372338776}
   - component: {fileID: 372338775}
   - component: {fileID: 372338782}
+  - component: {fileID: 372338783}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Untagged
@@ -346,7 +427,7 @@ MonoBehaviour:
   angleJitterDeg: 8
   volleySpeed: {x: 3, y: 5}
   gapSlots: 2
-  convergeCount: 60
+  convergeCount: 30
   convergeSpawnMargin: 1
   convergeSpeed: {x: 3, y: 5}
   convergeDuration: 2
@@ -358,7 +439,36 @@ MonoBehaviour:
   mergeTrackSpeed: 3
   mergeSlamSpeed: 14
   mergeSlamAccel: 30
+  mergeCount: 15
+  moveSmoothTime: 0.6
+  edgePadding: 1
+  minHopDistance: 2
+  sweepRange: 3
+  sweepSpeed: 1.2
+  orbitRadius: 1.5
+  phase1Pause: {x: 1.2, y: 2}
+  phase2Pause: {x: 0.8, y: 1.8}
+  phase3Pause: {x: 0.8, y: 1.8}
+  phase4Pause: {x: 1, y: 1.6}
+  specialPause: {x: 3, y: 5}
+  tiredPause: {x: 5, y: 10}
   attackCooldown: 10
+--- !u!114 &372338783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 372338774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7eaeb5a005611a41b402851660967f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
+  IsBoss: 1
+  maxHealth: 500
+  currHealth: 500
+  isInvuln: 0
 --- !u!1 &1212668905
 GameObject:
   m_ObjectHideFlags: 0
@@ -374,13 +484,14 @@ GameObject:
   - component: {fileID: 1212668911}
   - component: {fileID: 1212668912}
   - component: {fileID: 1212668913}
+  - component: {fileID: 1212668914}
   m_Layer: 0
   m_Name: MockPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1212668906
 SpriteRenderer:
   serializedVersion: 3
@@ -577,6 +688,20 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1212668914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1212668905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 291a14f501cb2834a8e82d6d0cfe8210, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerShooter
+  firePoint: {fileID: 0}
+  bulletPrefab: {fileID: 0}
 --- !u!1 &1360125917
 GameObject:
   m_ObjectHideFlags: 0
@@ -724,7 +849,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3923503553119376234, guid: 547b52c29b4026f43b333f931b1cc13e, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6873246577978249523, guid: 547b52c29b4026f43b333f931b1cc13e, type: 3}
       propertyPath: m_Name
@@ -852,3 +977,4 @@ SceneRoots:
   - {fileID: 372338781}
   - {fileID: 4010445797251903099}
   - {fileID: 1212668907}
+  - {fileID: 167308417}
