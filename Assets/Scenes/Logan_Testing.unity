@@ -310,6 +310,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 7064349103841221257, guid: b70c7520974ce894299e92b6d8f9bf30, type: 3}
+      propertyPath: startTime
+      value: 500
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -866,6 +870,14 @@ PrefabInstance:
     - target: {fileID: 4185638272600838743, guid: e3f6712dcb02f284f83bec2a198978d4, type: 3}
       propertyPath: m_Name
       value: Boss
+      objectReference: {fileID: 0}
+    - target: {fileID: 8332020495847441269, guid: e3f6712dcb02f284f83bec2a198978d4, type: 3}
+      propertyPath: maxHealth
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 8332020495847441269, guid: e3f6712dcb02f284f83bec2a198978d4, type: 3}
+      propertyPath: currHealth
+      value: 500
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

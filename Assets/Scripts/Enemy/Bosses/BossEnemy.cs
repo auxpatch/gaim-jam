@@ -83,12 +83,20 @@ public class BossEnemy : MonoBehaviour
     bool enraged;
     Coroutine phaseRoutine;
 
+    private BottomWarning bw;
+    private TopWarning tw;
+    [SerializeField] private float warningDuration = 1f;
+
     private void Start()
     {
         player = GameObject.FindAnyObjectByType<PlayerController>();
         enemyHealth = GetComponent<EnemyHealth>();
         phaseRoutine = StartCoroutine(RunPhase(1));
         moveTarget = transform.position;
+        bw = GameObject.FindAnyObjectByType<BottomWarning>();
+        tw = GameObject.FindAnyObjectByType<TopWarning>();
+        bw.gameObject.SetActive(false);
+        tw.gameObject.SetActive(false);
         //StartCoroutine(EnrageTimer());
     }
 
@@ -114,7 +122,23 @@ public class BossEnemy : MonoBehaviour
         transform.position = Vector2.SmoothDamp(transform.position, moveTarget, ref moveVelocity, moveSmoothTime);
     }
 
+    private IEnumerator Warn(bool bottom, bool top, float duration = -1f)
+    {
+        if (duration < 0f) duration = warningDuration;
 
+        if (bottom && bw != null) bw.gameObject.SetActive(true);   // or bw.Show()
+        if (top && tw != null) tw.gameObject.SetActive(true);      // or tw.Show()
+
+        yield return new WaitForSeconds(duration);
+
+        HideWarnings();
+    }
+
+    private void HideWarnings()
+    {
+        if (bw != null) bw.gameObject.SetActive(false);            // or bw.Hide()
+        if (tw != null) tw.gameObject.SetActive(false);            // or tw.Hide()
+    }
 
     #region Phases and Behavior
     int PhaseFromHealth()
@@ -198,6 +222,7 @@ public class BossEnemy : MonoBehaviour
             float rand = Random.Range(0, 101);
             if (rand <= 35)
             {
+                yield return Warn(bottom: true, top: false);
                 RisingVolley();
                 yield return new WaitForSeconds(Cooldown(phase2Pause));
             }
@@ -225,6 +250,7 @@ public class BossEnemy : MonoBehaviour
             {
                 rand = Random.Range(0, 101);
                 bool rising = rand >= 50;
+                yield return Warn(bottom: rising, top: !rising);
                 RisingVolley(rising);
                 yield return new WaitForSeconds(Cooldown(phase3Pause));
             }
@@ -255,6 +281,7 @@ public class BossEnemy : MonoBehaviour
             if (rand <= 15)
             {
                 GoToCenter();
+                yield return Warn(bottom: true, top: true);
                 StartCoroutine(ConvergeAttack());
                 yield return new WaitForSeconds(Cooldown(specialPause));
             }
@@ -263,6 +290,7 @@ public class BossEnemy : MonoBehaviour
             {
                 rand = Random.Range(0, 101);
                 bool rising = rand >= 50;
+                yield return Warn(bottom: rising, top: !rising);
                 RisingVolley(rising);
                 yield return new WaitForSeconds(Cooldown(phase4Pause));
             }
@@ -286,6 +314,7 @@ public class BossEnemy : MonoBehaviour
         GoToCenter();
         while (true)
         {
+            yield return Warn(bottom: true, top: true);
             StartCoroutine(ConvergeAttack());
             float rand = Random.Range(0, 101);
             if (rand >= 50)
