@@ -119,10 +119,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93f8795c0099dfe4fa5f3d14823f500c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  playerShooter: {fileID: 0}
+  playerShooter: {fileID: -9217042723300605212, guid: 81e4ba6c8da56bb4caf04994a8e62d6c, type: 3}
   scoreText: {fileID: 2679884576620115701}
   highscoreText: {fileID: 7797066218730644440}
-  upgrades: []
+  upgrades:
+  - requiredScore: 0
+    weaponLevel: 1
+  - requiredScore: 100
+    weaponLevel: 2
+  - requiredScore: 250
+    weaponLevel: 3
+  - requiredScore: 500
+    weaponLevel: 4
 --- !u!1 &2231074905608193808
 GameObject:
   m_ObjectHideFlags: 0
@@ -353,7 +361,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Timer
   time: 0
-  startTime: 10
+  startTime: 300
   timerText: {fileID: 3224231159805558238}
 --- !u!1 &7534175228357279877
 GameObject:

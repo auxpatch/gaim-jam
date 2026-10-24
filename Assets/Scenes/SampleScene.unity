@@ -603,6 +603,46 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7993986889397347589, guid: 000862f858dc51c49aa6f5fb7a8fa009, type: 3}
+      propertyPath: playerShooter
+      value: 
+      objectReference: {fileID: -9217042723300605212, guid: 81e4ba6c8da56bb4caf04994a8e62d6c, type: 3}
+    - target: {fileID: 7993986889397347589, guid: 000862f858dc51c49aa6f5fb7a8fa009, type: 3}
+      propertyPath: upgrades.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7993986889397347589, guid: 000862f858dc51c49aa6f5fb7a8fa009, type: 3}
+      propertyPath: upgrades.Array.data[0].weaponLevel
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7993986889397347589, guid: 000862f858dc51c49aa6f5fb7a8fa009, type: 3}
+      propertyPath: upgrades.Array.data[1].weaponLevel
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7993986889397347589, guid: 000862f858dc51c49aa6f5fb7a8fa009, type: 3}
+      propertyPath: upgrades.Array.data[2].weaponLevel
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7993986889397347589, guid: 000862f858dc51c49aa6f5fb7a8fa009, type: 3}
+      propertyPath: upgrades.Array.data[3].weaponLevel
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7993986889397347589, guid: 000862f858dc51c49aa6f5fb7a8fa009, type: 3}
+      propertyPath: upgrades.Array.data[0].requiredScore
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7993986889397347589, guid: 000862f858dc51c49aa6f5fb7a8fa009, type: 3}
+      propertyPath: upgrades.Array.data[1].requiredScore
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 7993986889397347589, guid: 000862f858dc51c49aa6f5fb7a8fa009, type: 3}
+      propertyPath: upgrades.Array.data[2].requiredScore
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 7993986889397347589, guid: 000862f858dc51c49aa6f5fb7a8fa009, type: 3}
+      propertyPath: upgrades.Array.data[3].requiredScore
+      value: 500
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
