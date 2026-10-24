@@ -119,6 +119,24 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &8071848 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6873246577978249523, guid: 547b52c29b4026f43b333f931b1cc13e, type: 3}
+  m_PrefabInstance: {fileID: 3174184209196699154}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8071857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8071848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7eaeb5a005611a41b402851660967f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
+  maxHealth: 20
 --- !u!1 &372338774
 GameObject:
   m_ObjectHideFlags: 0
@@ -733,7 +751,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6873246577978249523, guid: 547b52c29b4026f43b333f931b1cc13e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8071857}
   m_SourcePrefab: {fileID: 100100000, guid: 547b52c29b4026f43b333f931b1cc13e, type: 3}
 --- !u!1001 &4010445797251903099
 PrefabInstance:
