@@ -33,14 +33,17 @@ public class BossEnemy : MonoBehaviour
     {
         GameObject bullet = Instantiate(bulletPrefab, position, Quaternion.identity);
         EnemyBullet bulletCode = bullet.GetComponent<EnemyBullet>();
-        if (willDelay) LauncDelay(delay);
-        bulletCode.Launch(direction, speed);
+        if (willDelay) LaunchAfterDelay(bulletCode, direction, speed, delay);
+        else bulletCode.Launch(direction, speed);
         return bulletCode;
     }
 
-    private IEnumerator LauncDelay(float delay)
+    private IEnumerator LaunchAfterDelay(EnemyBullet bullet, Vector2 direction, float speed, float delay)
     {
         yield return new WaitForSeconds(delay);
+        if (bullet != null) // it may have been destroyed while waiting
+            bullet.Launch(direction, speed);
+
     }
 
     private void RingOfBullets()
