@@ -8,7 +8,9 @@ public class PlayerController : MonoBehaviour
     [Header("Movement Settings")]
     [SerializeField] private float moveSpeed = 10f;
     [SerializeField] private float focusSpeed = 5f;
+    [SerializeField] private float attackCooldown = 0.1f;
 
+    private float attackTimer = 0f;
     private InputHandler inputHandler;
     private PlayerShooter playerShooter;
 
@@ -37,13 +39,15 @@ public class PlayerController : MonoBehaviour
 
         HandleMovement();
         HandleShoot();
+        HandleTimers();
 
     }
 
     private void HandleShoot()
     {
-        if (inputHandler.shootInput)
+        if (inputHandler.shootInput && attackTimer <= 0 )
         {
+            attackTimer = attackCooldown;
             playerShooter.Shoot();
         }
     }
@@ -57,6 +61,11 @@ public class PlayerController : MonoBehaviour
         if(currentMovement.magnitude > 1){
             currentMovement.Normalize();
         }
+    }
+
+    private void HandleTimers()
+    {
+        attackTimer -= Time.deltaTime;
     }
 
     private void FixedUpdate()

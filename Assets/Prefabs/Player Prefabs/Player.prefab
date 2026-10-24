@@ -15,9 +15,10 @@ GameObject:
   - component: {fileID: 1708128674529548404}
   - component: {fileID: 4920113069152655998}
   - component: {fileID: -9217042723300605212}
+  - component: {fileID: -7437141485470700116}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -32,7 +33,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.54038, y: 0.54038, z: 0.54038}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 214877950143200509}
@@ -155,7 +156,7 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -174,8 +175,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6abb853cbca9bda40b61f1f98c5b0ebd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  moveSpeed: 5
+  moveSpeed: 10
   focusSpeed: 5
+  attackCooldown: 0.03
 --- !u!114 &4920113069152655998
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,8 +208,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 291a14f501cb2834a8e82d6d0cfe8210, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerShooter
-  firePoint: {fileID: 5907601277403507011}
+  firePoint: {fileID: 214877950143200509}
   bulletPrefab: {fileID: 1232000841315202943, guid: c0e17f4ce9f13ba4280887ecc1daafa7, type: 3}
+--- !u!114 &-7437141485470700116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 182380988195312023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9aea040a0cb613c41a4b55cd4b71b592, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  maxLives: 3
+  iFrameDuration: 2
+  flashInterval: 0.1
 --- !u!1 &2672859502129588721
 GameObject:
   m_ObjectHideFlags: 0
