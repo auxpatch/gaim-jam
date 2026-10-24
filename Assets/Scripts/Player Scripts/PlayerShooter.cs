@@ -9,7 +9,7 @@ public class PlayerShooter : MonoBehaviour
     public Transform firePoint;
     public GameObject bulletPrefab;
 
-    private int currentUpgradeLevel = 1;
+   [SerializeField] private int currentUpgradeLevel = 1;
 
 
     public void SetUpgradeLevel(int level)
@@ -19,10 +19,13 @@ public class PlayerShooter : MonoBehaviour
     }
     public void Shoot()
     {
-        switch (currentUpgradeLevel)
+        int level = ScoreManager.Instance !=null
+        ? ScoreManager.Instance.CurrentLevel
+        : currentUpgradeLevel;
+        switch (level)
         {
             case 1:
-                GameObject obj = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+                SpawnBullet(0f);
                 break;
             case 2:
                 SpawnBullet(-10f);
@@ -45,7 +48,7 @@ public class PlayerShooter : MonoBehaviour
         void SpawnBullet(float angleOffset)
         {
             Quaternion rotation = firePoint.rotation * Quaternion.Euler(0, 0, angleOffset);
-            Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+            Instantiate(bulletPrefab, firePoint.position, rotation);
         }
 
     }

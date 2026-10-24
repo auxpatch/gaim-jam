@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class BossEnemy : MonoBehaviour
 {
@@ -42,14 +43,305 @@ public class BossEnemy : MonoBehaviour
     [SerializeField] private float mergeSlamAccel = 30f;
     [SerializeField] private float mergeCount = 30f;
 
+    [Header("Movement")]
+    [SerializeField] private float moveSmoothTime = 0.6f;   // higher = lazier glide
+
+    [SerializeField] private float edgePadding = 1f;        // keep the boss off the screen edges
+    [SerializeField] private float minHopDistance = 2f;     // don't pick a spot right next to the current one
+
+    enum MoveMode { Idle, Hop, Sweep, Orbit }
+
+    private MoveMode moveMode = MoveMode.Idle;
+    private float modeTime;
+
+    [Header("Sweep / Orbit")]
+    [SerializeField] private float sweepRange = 3f;
+    [SerializeField] private float sweepSpeed = 1.2f;
+    [SerializeField] private float orbitRadius = 1.5f;
+
+    [Header("Phase 1 timing")]
+    [SerializeField] private Vector2 phase1Pause = new Vector2(2f, 3f);   // calm gap between attacks
+
+    [Header("Phase 2 timing")]
+    [SerializeField] private Vector2 phase2Pause = new Vector2(1.5f, 2.5f); //Shorter gap between attacks
+
+    [Header("Phase 3 timing")]
+    [SerializeField] private Vector2 phase3Pause = new Vector2(1.2f, 2f); //Shorter gap between attacks
+
+    [Header("Phase 4 timing")]
+    [SerializeField] private Vector2 phase4Pause = new Vector2(1.0f, 1.6f);
+    [SerializeField] private Vector2 specialPause = new Vector2(3f, 5f);
+    [SerializeField] private Vector2 tiredPause = new Vector2(5f, 10f);
+
+    private Vector2 moveTarget;
+    private Vector2 moveVelocity;
     private PlayerController player;
+    private EnemyHealth enemyHealth;
+
+    private int phase = 1;
+    bool transitioning;
+    bool enraged;
+    Coroutine phaseRoutine;
 
     private void Start()
     {
         player = GameObject.FindAnyObjectByType<PlayerController>();
+        enemyHealth = GetComponent<EnemyHealth>();
+        phaseRoutine = StartCoroutine(RunPhase(1));
+        moveTarget = transform.position;
+        //StartCoroutine(EnrageTimer());
     }
 
-    #region Phase 1 General Floating Behavior
+    private void Update()
+    {
+        modeTime += Time.deltaTime;
+        Camera cam = Camera.main;
+        Vector2 c = cam.transform.position;
+        float topY = c.y + cam.orthographicSize * 0.6f;
+
+        switch (moveMode)
+        {
+            case MoveMode.Sweep:   // side to side across the top
+                moveTarget = new Vector2(c.x + Mathf.Sin(modeTime * sweepSpeed) * sweepRange, topY);
+                break;
+            case MoveMode.Orbit:   // circle around a point near the top
+                moveTarget = new Vector2(c.x + Mathf.Cos(modeTime * sweepSpeed) * orbitRadius * 2f,
+                                         topY + Mathf.Sin(modeTime * sweepSpeed) * orbitRadius * 0.5f);
+                break;
+                // Hop and Idle: the phase coroutine sets moveTarget itself
+        }
+
+        transform.position = Vector2.SmoothDamp(transform.position, moveTarget, ref moveVelocity, moveSmoothTime);
+    }
+
+
+
+    #region Phases and Behavior
+    int PhaseFromHealth()
+    {
+        float frac = enemyHealth.currHealth / enemyHealth.maxHealth;
+        return Mathf.Clamp(1 + Mathf.FloorToInt((1f - frac) / 0.2f), 1, 5);
+    }
+
+    public void CheckPhase()
+    {
+        if (transitioning) return;                 // re-checked when the transition ends
+        if (PhaseFromHealth() > phase) StartCoroutine(Transition());
+    }
+
+    IEnumerator Transition()
+    {
+        transitioning = true;
+        enemyHealth.isInvuln = true;
+        if (phaseRoutine != null)
+        {
+            StopCoroutine(phaseRoutine);
+            phaseRoutine = null;
+        }
+
+        GoToTopCenter();
+
+        // Skip the merge when entering phase 5 if you want; here every boundary gets one
+        yield return StartCoroutine(MergeAttack());   // waits until the cubes finish
+
+        phase = PhaseFromHealth();                 // may have jumped more than one phase
+        transitioning = false;
+        enemyHealth.isInvuln = false;
+        phaseRoutine = StartCoroutine(RunPhase(phase));
+        CheckPhase();                              // covers damage taken during the merge
+    }
+
+    IEnumerator RunPhase(int p)
+    {
+        switch (p)
+        {
+            case 1: yield return Phase1(); break;
+            case 2: yield return Phase2(); break;
+            case 3: yield return Phase3(); break;
+            case 4: yield return Phase4(); break;
+            case 5: yield return Phase5(); break;
+            default: yield return Phase1(); break; // placeholder until the others exist
+        }
+        yield break;
+    }
+
+    IEnumerator Phase1()
+    {
+        SetMoveMode(MoveMode.Sweep, 0.15f);   // lower smooth time = tighter tracking of the sine path
+        bool useRing = true;
+        while (true)
+        {
+            if (useRing) RingOfBullets();
+            else yield return ArcBelow();
+            SetMoveMode(MoveMode.Sweep, 0.15f);
+            float random = Random.Range(0, 101);
+            if (random >= 50)
+                useRing = !useRing;
+            yield return new WaitForSeconds(Cooldown(phase1Pause));
+        }
+    }
+
+    IEnumerator Phase2()
+    {
+        bool useRing = true;
+        SetMoveMode(MoveMode.Hop, 0.6f);
+        while (true)
+        {
+            moveTarget = RandomTopHalfPoint();
+            float timeout = 3f;
+            while (((Vector2)transform.position - moveTarget).sqrMagnitude >= 0.25f && timeout > 0f)
+            {
+                timeout -= Time.deltaTime;
+                yield return null;
+            }
+
+            float rand = Random.Range(0, 101);
+            if (rand <= 35)
+            {
+                RisingVolley();
+                yield return new WaitForSeconds(Cooldown(phase2Pause));
+            }
+
+            if (useRing) RingOfBullets();
+            else yield return ArcBelow();
+            SetMoveMode(MoveMode.Hop, 0.6f);
+            float random = Random.Range(0, 101);
+            if (random >= 50)
+                useRing = !useRing;
+
+            yield return new WaitForSeconds(Cooldown(phase2Pause));
+        }
+    }
+
+    IEnumerator Phase3()
+    {
+        bool useRing = true;
+        SetMoveMode(MoveMode.Orbit, 0.6f);
+        while (true)
+        {
+            float rand = Random.Range(0, 101);
+
+            if (rand <= 35)
+            {
+                rand = Random.Range(0, 101);
+                bool rising = rand >= 50;
+                RisingVolley(rising);
+                yield return new WaitForSeconds(Cooldown(phase3Pause));
+            }
+
+            if (useRing) RingOfBullets();
+            else yield return ArcBelow();
+            SetMoveMode(MoveMode.Orbit, 0.6f);
+
+            float random = Random.Range(0, 101);
+            if (random >= 35)
+                useRing = true;
+            else
+                useRing = false;
+
+            yield return new WaitForSeconds(Cooldown(phase3Pause));
+        }
+
+    }
+
+    IEnumerator Phase4()
+    {
+        bool useRing = true;
+        SetMoveMode(MoveMode.Orbit, 0.6f);
+        while (true)
+        {
+            float rand = Random.Range(0, 101);
+
+            if (rand <= 15)
+            {
+                GoToCenter();
+                StartCoroutine(ConvergeAttack());
+                yield return new WaitForSeconds(Cooldown(specialPause));
+            }
+
+            if (rand <= 50)
+            {
+                rand = Random.Range(0, 101);
+                bool rising = rand >= 50;
+                RisingVolley(rising);
+                yield return new WaitForSeconds(Cooldown(phase4Pause));
+            }
+
+            if (useRing) RingOfBullets();
+            else yield return ArcBelow();
+            SetMoveMode(MoveMode.Orbit, 0.6f);
+
+            float random = Random.Range(0, 101);
+            if (random >= 35)
+                useRing = true;
+            else
+                useRing = false;
+
+            yield return new WaitForSeconds(Cooldown(phase4Pause));
+        }
+    }
+
+    IEnumerator Phase5()
+    {
+        GoToCenter();
+        while (true)
+        {
+            StartCoroutine(ConvergeAttack());
+            float rand = Random.Range(0, 101);
+            if (rand >= 50)
+                yield return new WaitForSeconds(Cooldown(specialPause));
+            else
+                yield return new WaitForSeconds(Cooldown(tiredPause));
+        }
+    }
+
+    float Cooldown(Vector2 range)
+    {
+        float t = Random.Range(range.x, range.y);
+        return t;
+    }
+
+    Vector2 RandomTopHalfPoint()
+    {
+        Camera cam = Camera.main;
+        float halfH = cam.orthographicSize;
+        float halfW = halfH * cam.aspect;
+        Vector2 c = cam.transform.position;
+
+        Vector2 p = transform.position;
+        for (int i = 0; i < 10; i++)
+        {
+            p = new Vector2(
+                Random.Range(c.x - halfW + edgePadding, c.x + halfW - edgePadding),
+                Random.Range(c.y + edgePadding, c.y + halfH - edgePadding));   // c.y to the top = top half
+            if (((Vector2)transform.position - p).sqrMagnitude >= minHopDistance * minHopDistance) break;
+        }
+        return p;
+    }
+    void SetMoveMode(MoveMode mode, float smoothTime = 0.6f)
+    {
+        moveMode = mode;
+        modeTime = 0f;
+        moveSmoothTime = smoothTime;
+    }
+
+    void GoToTopCenter(float smoothTime = 0.4f)
+    {
+        Camera cam = Camera.main;
+        Vector2 c = cam.transform.position;
+
+        SetMoveMode(MoveMode.Idle, smoothTime);
+        moveTarget = new Vector2(c.x, c.y + cam.orthographicSize - edgePadding);
+    }
+
+    void GoToCenter(float smoothTime = 0.4f)
+    {
+        Camera cam = Camera.main;
+        Vector2 c = cam.transform.position;
+
+        SetMoveMode(MoveMode.Idle, smoothTime);
+        moveTarget = new Vector2(c.x, c.y);
+    }
 
     #endregion
 
@@ -131,8 +423,9 @@ public class BossEnemy : MonoBehaviour
         }
     }
 
-    private void ArcBelow()
+    private IEnumerator ArcBelow()
     {
+        SetMoveMode(MoveMode.Idle);
         Vector2 center = transform.position;
         float centerAngle = 270f;
 
@@ -147,6 +440,7 @@ public class BossEnemy : MonoBehaviour
             Vector2 spawnPos = center + radial * arcRadius;
             SpawnBulletAimed(spawnPos, player.transform, arcSpeed, arcChargeTimer, true);
         }
+        yield return new WaitForSeconds(arcChargeTimer);
     }
 
     //Passing false will make it RainingVolley
@@ -208,9 +502,10 @@ public class BossEnemy : MonoBehaviour
             }
             yield return null;
         }
+        yield return new WaitForSeconds(2f);
     }
 
-    private void MergeAttack()
+    private IEnumerator MergeAttack()
     {
         Camera cam = Camera.main;
         float halfH = cam.orthographicSize;
@@ -237,6 +532,7 @@ public class BossEnemy : MonoBehaviour
                    mergeSlamSpeed, mergeSlamAccel);
             b.Arrived += onArrived;
         }
+        yield return new WaitUntil(() => arrived >= 2);
     }
 
     // Optional payoff: a ring where they collide
@@ -250,25 +546,6 @@ public class BossEnemy : MonoBehaviour
         }
     }
 
-    #endregion
-
-    #region testing
-    private float cooldown = 5f;
-    private float timer = 0f;
-    private void Update()
-    {
-        TestAttack();
-        HandleTimer();
-    }
-
-    private void TestAttack()
-    {
-        if(attackTimer <= 0)
-        {
-            attackTimer = attackCooldown;
-            
-        }
-    }
     #endregion
 
 

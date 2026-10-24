@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Level: 1'
+  m_text: Level
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
@@ -610,9 +610,8 @@ MonoBehaviour:
   playerShooter: {fileID: -9217042723300605212, guid: 81e4ba6c8da56bb4caf04994a8e62d6c, type: 3}
   scoreText: {fileID: 5464046610518588317}
   highscoreText: {fileID: 6775051024928260617}
+  levelText: {fileID: 6318946368232094118}
   upgrades:
-  - requiredScore: 0
-    weaponLevel: 1
   - requiredScore: 100
     weaponLevel: 2
   - requiredScore: 250

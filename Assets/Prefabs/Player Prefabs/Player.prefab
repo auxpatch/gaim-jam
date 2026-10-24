@@ -177,7 +177,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   moveSpeed: 10
   focusSpeed: 5
-  attackCooldown: 0.08
+  attackCooldown: 0.06
 --- !u!114 &4920113069152655998
 MonoBehaviour:
   m_ObjectHideFlags: 0
