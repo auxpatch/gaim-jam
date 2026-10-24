@@ -9,9 +9,14 @@ public class ScoreManager : MonoBehaviour
 
     public TMP_Text scoreText;
     public TMP_Text highscoreText;
+    public TMP_Text levelText;
 
     int score = 0;
     int highscore = 0;
+    int currentLevel= 1;
+
+    public int CurrentLevel => currentLevel;
+
 
     [System.Serializable]
     public struct UpgradeThreshold
@@ -56,6 +61,8 @@ public class ScoreManager : MonoBehaviour
     {
         while(nextUpgradeIndex < upgrades.Length && score >= upgrades[nextUpgradeIndex].requiredScore)
         {
+            currentLevel = upgrades[nextUpgradeIndex].weaponLevel;
+            if (playerShooter != null) playerShooter.SetUpgradeLevel(currentLevel);
             playerShooter.SetUpgradeLevel(upgrades[nextUpgradeIndex].weaponLevel);
             nextUpgradeIndex++;
         }
@@ -65,12 +72,15 @@ public class ScoreManager : MonoBehaviour
     {
         score = 0;
         nextUpgradeIndex=0;
+        currentLevel = 1;
+        if (playerShooter !=null) playerShooter.SetUpgradeLevel(currentLevel);
         UpdateUI();
     }
 
     void UpdateUI()
     {
-        scoreText.text = score + " POINTS";
+        scoreText.text = "SCORE: " + score;
         highscoreText.text = "HIGHSCORE: " + highscore;
+        if (levelText !=null) levelText.text="LEVEL: " + currentLevel;
     }
 }
