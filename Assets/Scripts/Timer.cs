@@ -3,18 +3,24 @@ using TMPro;
 public class Timer : MonoBehaviour
 {
    public float time;
-   public float timeLimit = 300f;
+   public float startTime = 300f;
    public TextMeshProUGUI timerText;
 
    bool finished;
 
+   void Start()
+   {
+       time = startTime;
+       UpdateText();
+   }
+
     void Update()
     {
         if(finished)return;
-        time += Time.deltaTime;
-        if (time >- timeLimit)
+        time -= Time.deltaTime;
+        if (time <= 0f)
         {
-            time = timeLimit;
+            time = 0f;
             UpdateText();
             QuitGame();
             return;
@@ -24,9 +30,10 @@ public class Timer : MonoBehaviour
 
     void UpdateText()
     {
+        //int totalSeconds = Math.CeilToInt(time);
         int minutes = Mathf.FloorToInt(time/60f);
         int seconds = Mathf.FloorToInt(time%60f);
-        timerText.text = $"{minutes:00}:{seconds:00}";
+        timerText.text = $"{minutes}:{seconds:00}";
     }
 
     void QuitGame()
