@@ -310,6 +310,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 7064349103841221257, guid: b70c7520974ce894299e92b6d8f9bf30, type: 3}
+      propertyPath: startTime
+      value: 500
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -686,6 +690,71 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!1 &1545535079
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1545535081}
+  - component: {fileID: 1545535080}
+  m_Layer: 0
+  m_Name: LevelSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1545535080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1545535079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b366fa455e1abae48bf0131391736ad9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LevelSpawner
+  enemies:
+  - prefab: {fileID: 6873246577978249523, guid: 547b52c29b4026f43b333f931b1cc13e, type: 3}
+    weight: 3
+    unlockTime: 0
+    groupSize: {x: 2, y: 3}
+  - prefab: {fileID: 6873246577978249523, guid: 415dab5b03d43c34cb09429532ba5ca1, type: 3}
+    weight: 1
+    unlockTime: 20
+    groupSize: {x: 2, y: 2}
+  levelDuration: 120
+  startInterval: 2.5
+  endInterval: 1
+  intervalJitter: 0.3
+  groupStagger: 0.4
+  maxAlive: 8
+  quietStart: 2
+  bossPrefab: {fileID: 4185638272600838743, guid: e3f6712dcb02f284f83bec2a198978d4, type: 3}
+  bossSpawnOffset: {x: 0, y: 1.5}
+  waitForClear: 1
+  clearThreshold: 1
+  clearTimeout: 8
+--- !u!4 &1545535081
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1545535079}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.43197, y: 1.11042, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &3174184209196699154
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -867,6 +936,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boss
       objectReference: {fileID: 0}
+    - target: {fileID: 4185638272600838743, guid: e3f6712dcb02f284f83bec2a198978d4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8332020495847441269, guid: e3f6712dcb02f284f83bec2a198978d4, type: 3}
+      propertyPath: maxHealth
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 8332020495847441269, guid: e3f6712dcb02f284f83bec2a198978d4, type: 3}
+      propertyPath: currHealth
+      value: 500
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -883,3 +964,4 @@ SceneRoots:
   - {fileID: 1212668907}
   - {fileID: 167308417}
   - {fileID: 1025178307}
+  - {fileID: 1545535081}
