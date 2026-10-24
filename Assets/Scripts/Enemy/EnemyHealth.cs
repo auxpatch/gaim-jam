@@ -16,11 +16,12 @@ public class EnemyHealth : MonoBehaviour
         currHealth -= damage;
         if(currHealth <= 0)
         {
-            Destroy(gameObject);
             if (ScoreManager.Instance != null)
             {
                 ScoreManager.Instance.AddScore(pointValue);
             }
+            Destroy(gameObject);
+
         }
     }
 }
