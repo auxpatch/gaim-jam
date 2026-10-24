@@ -15,7 +15,7 @@ public class EnemyBullet : MonoBehaviour
 
     public void Start()
     {
-        playerHealth = GetComponent<PlayerHealth>();
+        playerHealth = GameObject.FindAnyObjectByType<PlayerHealth>();
     }
 
     public void Launch(Vector2 direction, float speed)
@@ -25,7 +25,7 @@ public class EnemyBullet : MonoBehaviour
         transform.up = direction;
     }
 
-    public void OnCollisionEnter2D(Collision2D collision)
+    public void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.GetComponent<PlayerHealth>())
         {
