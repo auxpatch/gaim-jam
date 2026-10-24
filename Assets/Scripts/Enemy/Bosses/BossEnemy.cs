@@ -40,6 +40,7 @@ public class BossEnemy : MonoBehaviour
     [SerializeField] private float mergeTrackSpeed = 3f;   // keep below player speed
     [SerializeField] private float mergeSlamSpeed = 14f;
     [SerializeField] private float mergeSlamAccel = 30f;
+    [SerializeField] private float mergeCount = 30f;
 
     private PlayerController player;
 
@@ -241,10 +242,10 @@ public class BossEnemy : MonoBehaviour
     // Optional payoff: a ring where they collide
     private void OnMergeImpact(Vector2 point)
     {
-        int n = 16;
-        for (int i = 0; i < n; i++)
+        
+        for (int i = 0; i < mergeCount; i++)
         {
-            float a = i * (360f / n) * Mathf.Deg2Rad;
+            float a = i * (360f / mergeCount) * Mathf.Deg2Rad;
             SpawnBullet(point, new Vector2(Mathf.Cos(a), Mathf.Sin(a)), 4f);
         }
     }
