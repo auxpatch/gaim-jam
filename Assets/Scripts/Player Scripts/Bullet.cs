@@ -14,8 +14,8 @@ public class Bullet : MonoBehaviour
         rb.linearVelocity = linearVelocity;
     }
 
-    void OnTriggerEnter2D(Collider2D hitInfo)
+    void OnTriggerEnter2D(Collider2D collision)
     {
-        Destroy(gameObject);
+        //Destroy(gameObject);
     }
 }
