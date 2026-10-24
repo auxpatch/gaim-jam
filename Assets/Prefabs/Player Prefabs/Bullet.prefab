@@ -29,8 +29,8 @@ Transform:
   m_GameObject: {fileID: 1232000841315202943}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.205544, y: 0.51386, z: 0.51386}
+  m_LocalPosition: {x: -0.0010196, y: 0, z: 0}
+  m_LocalScale: {x: 0.5604262, y: 1.4010655, z: 1.4010655}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -107,8 +107,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b830a0979cd01d94ab0662c1f5a0309c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bullet
-  speed: 5
-  damage: 20
+  speed: 20
+  damage: 2
+  lifetime: 4
   rb: {fileID: 3535013788259471657}
 --- !u!50 &3535013788259471657
 Rigidbody2D:
