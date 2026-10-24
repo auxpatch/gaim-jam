@@ -2,18 +2,25 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
-    [SerializeField] private float maxHealth = 20f;
+    [SerializeField] private bool IsBoss = false;
+    private BossEnemy bossRef;
+    public float maxHealth = 20f;
+    public float currHealth = 20f;
     [SerializeField] private int pointValue = 100;
 
-    private float currHealth = 20f;
+    public bool isInvuln = false;
+
     private void Start()
     {
         currHealth = maxHealth;
+        if (IsBoss) bossRef = GetComponent<BossEnemy>();
     }
 
     public void TakeDamage(float damage)
     {
+        if (isInvuln) return;
         currHealth -= damage;
+
         if(currHealth <= 0)
         {
             if (ScoreManager.Instance != null)
@@ -23,5 +30,11 @@ public class EnemyHealth : MonoBehaviour
             Destroy(gameObject);
 
         }
+
+        if (IsBoss)
+        {
+            bossRef.CheckPhase();
+        }
+
     }
 }
