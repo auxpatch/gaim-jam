@@ -19,7 +19,7 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
-        //TestAttack();
+        TestAttack();
         HandleTimer();
     }
 

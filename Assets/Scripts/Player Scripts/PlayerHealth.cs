@@ -27,6 +27,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage()
     {
+        Debug.Log("PLAYER HEALTH - took damage!");
         if (isInvulnerable) return;
         currentLives--;
 
@@ -57,7 +58,7 @@ public class PlayerHealth : MonoBehaviour
         {
             spriteRenderer.enabled = !spriteRenderer.enabled;
             yield return new WaitForSeconds(flashInterval);
-            elapsed += Time.deltaTime;
+            elapsed += flashInterval;
         }
 
         spriteRenderer.enabled = true;
