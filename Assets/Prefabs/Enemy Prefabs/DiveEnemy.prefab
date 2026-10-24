@@ -10,15 +10,13 @@ GameObject:
   m_Component:
   - component: {fileID: 8460716130298655391}
   - component: {fileID: 2998302036773768792}
-  - component: {fileID: 3923503553119376234}
   - component: {fileID: 8007988365995842703}
-  - component: {fileID: 1068703002292812676}
   - component: {fileID: 1865629640914156305}
   - component: {fileID: 3819407012627143950}
   - component: {fileID: 1835607709531618161}
   - component: {fileID: 8006104462492004863}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: DiveEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -99,24 +97,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
---- !u!114 &3923503553119376234
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6873246577978249523}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a5a47ef56ba2254e8a84f283d03d2de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyController
-  attackCooldown: 3
-  bulletPrefab: {fileID: 2708603430645744538, guid: e80841cf28dc4f842a670df6a8d6bcf9, type: 3}
-  generalSpeed: 5
-  ringCount: 20
-  ringSpeed: 5
-  spawnRadius: 0.9
 --- !u!50 &8007988365995842703
 Rigidbody2D:
   serializedVersion: 5
@@ -144,31 +124,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!114 &1068703002292812676
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6873246577978249523}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8ad77a70d9dc94408ac843f1340dfd5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RandomFlyThrough
-  halfExtents: {x: 4, y: 4.5}
-  offscreenMargin: 5
-  hoverMin: {x: -3, y: 1}
-  hoverMax: {x: 3, y: 3.5}
-  hoverCount: {x: 1, y: 3}
-  minSpotSpacing: 1.5
-  moveSpeed: {x: 2.5, y: 4}
-  exitSpeed: {x: 3, y: 5}
-  hoverTime: {x: 1, y: 3}
-  wobbleAmplitude: {x: 0, y: 0.6}
-  wobbleFrequency: {x: 1, y: 3}
-  wobbleFadeSpeed: 3
-  maxLifetime: 50
 --- !u!114 &1865629640914156305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,7 +131,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6873246577978249523}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3ad1282940e426e478e6cb7c1f922d7d, type: 3}
   m_Name: 
