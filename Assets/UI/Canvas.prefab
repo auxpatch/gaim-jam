@@ -1207,5 +1207,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Timer
   time: 0
-  startTime: 25
+  startTime: 300
   timerText: {fileID: 5212514060048146720}
