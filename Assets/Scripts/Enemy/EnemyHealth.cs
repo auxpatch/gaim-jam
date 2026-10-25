@@ -30,7 +30,7 @@ public class EnemyHealth : MonoBehaviour
             }
             if (IsBoss)
             {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
+                SceneManager.LoadScene("Win_Scene");
             }
             Destroy(gameObject);
 
