@@ -8,12 +8,12 @@ public class StartMenuScript : MonoBehaviour
 
     public void PlayGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene("MainScene");
     }
 
     public void RestartGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 2);
+        SceneManager.LoadScene("Game_Start");
     }
 
     public void OpenOptions()
