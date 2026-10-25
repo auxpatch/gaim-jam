@@ -73,6 +73,8 @@ public class BossEnemy : MonoBehaviour
     [SerializeField] private Vector2 specialPause = new Vector2(3f, 5f);
     [SerializeField] private Vector2 tiredPause = new Vector2(5f, 10f);
 
+    [SerializeField] private Sprite devSprite;
+
     private Vector2 moveTarget;
     private Vector2 moveVelocity;
     private PlayerController player;
@@ -556,6 +558,11 @@ public class BossEnemy : MonoBehaviour
         foreach (float x in new[] { leftX, rightX })
         {
             MergeBlock b = Instantiate(mergeBlockPrefab);
+            if(x == rightX)
+            {
+                SpriteRenderer sb = b.GetComponent<SpriteRenderer>();
+                sb.sprite = devSprite;
+            }
             b.Init(player.transform, new Vector2(x, c.y), c.x, minY, maxY,
                    mergeTrackDuration, mergePauseDuration, mergeTrackSpeed,
                    mergeSlamSpeed, mergeSlamAccel);
