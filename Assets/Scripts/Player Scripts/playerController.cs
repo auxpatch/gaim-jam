@@ -51,6 +51,7 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 ClampToCamera(Vector2 p)
     {
+        cam = Camera.main;
         float halfH = cam.orthographicSize;
         float halfW = halfH * cam.aspect;   
         Vector2 c = cam.transform.position;

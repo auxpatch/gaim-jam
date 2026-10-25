@@ -8,6 +8,11 @@ public class StartMenuScript : MonoBehaviour
 
     public void PlayGame()
     {
+        PlayerController pc = GameObject.FindAnyObjectByType<PlayerController>(FindObjectsInactive.Include);
+        if(pc != null)
+        {
+            pc.gameObject.SetActive(true);
+        }
         SceneManager.LoadScene("MainScene");
     }
 
