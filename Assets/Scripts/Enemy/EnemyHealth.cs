@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EnemyHealth : MonoBehaviour
 {
@@ -26,6 +27,10 @@ public class EnemyHealth : MonoBehaviour
             if (ScoreManager.Instance != null)
             {
                 ScoreManager.Instance.AddScore(pointValue);
+            }
+            if (IsBoss)
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
             }
             Destroy(gameObject);
 
