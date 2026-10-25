@@ -9,10 +9,16 @@ EditorBuildSettings:
     path: Assets/Scenes/Game_Start.unity
     guid: 072c525a260a3dd4581bf03837ffd266
   - enabled: 1
+    path: Assets/Scenes/MainScene.unity
+    guid: 7cd7c9c23b3ff104c9570f36d4f2f3d5
+  - enabled: 0
     path: Assets/Scenes/Player Test.unity
     guid: de8eb8018a349c14a86676b3d2d86afc
   - enabled: 1
     path: Assets/Scenes/Game_Over.unity
     guid: 0b0c4633f535a3a4ea124bb27620b4a2
+  - enabled: 1
+    path: Assets/Scenes/Win_Scene.unity
+    guid: edac7d0ca7ba45847af7d0908fb76e3c
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

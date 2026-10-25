@@ -70,6 +70,8 @@ public class PlayerHealth : MonoBehaviour
     private void GameOver()
     {
         gameObject.SetActive(false);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
