@@ -10,6 +10,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float focusSpeed = 5f;
     [SerializeField] private float attackCooldown = 0.1f;
 
+    [Header("Bounds")]
+    [SerializeField] private Vector2 boundsPadding = new Vector2(0.4f, 0.4f); // roughly half your sprite size
+
+    private Camera cam;
+
     private float attackTimer = 0f;
     private InputHandler inputHandler;
     private PlayerShooter playerShooter;
@@ -23,6 +28,7 @@ public class PlayerController : MonoBehaviour
         // Lock and hide cursor for standard first-person gameplay
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        cam = Camera.main; // cache once, merge into your existing Awake
     }
 
     private void Start()
@@ -41,6 +47,17 @@ public class PlayerController : MonoBehaviour
         HandleShoot();
         HandleTimers();
 
+    }
+
+    private Vector2 ClampToCamera(Vector2 p)
+    {
+        float halfH = cam.orthographicSize;
+        float halfW = halfH * cam.aspect;   
+        Vector2 c = cam.transform.position;
+
+        p.x = Mathf.Clamp(p.x, c.x - halfW + boundsPadding.x, c.x + halfW - boundsPadding.x);
+        p.y = Mathf.Clamp(p.y, c.y - halfH + boundsPadding.y, c.y + halfH - boundsPadding.y);
+        return p;
     }
 
     private void HandleShoot()
@@ -70,7 +87,8 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.MovePosition(rb.position + currentMovement * ( inputHandler.focusInput ? focusSpeed : moveSpeed) * Time.fixedDeltaTime);
+        Vector2 next = rb.position + currentMovement * (inputHandler.focusInput ? focusSpeed : moveSpeed) * Time.fixedDeltaTime;
+        rb.MovePosition(ClampToCamera(next));
     }
 
 }
