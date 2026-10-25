@@ -112,7 +112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   attackCooldown: 3
-  bulletPrefab: {fileID: 2708603430645744538, guid: e80841cf28dc4f842a670df6a8d6bcf9, type: 3}
+  bulletPrefab: {fileID: 3786819528897739939, guid: e80841cf28dc4f842a670df6a8d6bcf9, type: 3}
   generalSpeed: 5
   ringCount: 20
   ringSpeed: 5
@@ -259,4 +259,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7eaeb5a005611a41b402851660967f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
+  IsBoss: 0
   maxHealth: 20
+  currHealth: 20
+  pointValue: 100
+  isInvuln: 0
