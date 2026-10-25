@@ -93,8 +93,8 @@ public class BossEnemy : MonoBehaviour
         enemyHealth = GetComponent<EnemyHealth>();
         phaseRoutine = StartCoroutine(RunPhase(1));
         moveTarget = transform.position;
-        bw = GameObject.FindAnyObjectByType<BottomWarning>();
-        tw = GameObject.FindAnyObjectByType<TopWarning>();
+        bw = GameObject.FindAnyObjectByType<BottomWarning>(FindObjectsInactive.Include);
+        tw = GameObject.FindAnyObjectByType<TopWarning>(FindObjectsInactive.Include);
         bw.gameObject.SetActive(false);
         tw.gameObject.SetActive(false);
         //StartCoroutine(EnrageTimer());
