@@ -225,7 +225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9aea040a0cb613c41a4b55cd4b71b592, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
-  maxLives: 9
+  maxLives: 1
   iFrameDuration: 2
   flashInterval: 0.1
 --- !u!95 &-5703364053571102615
