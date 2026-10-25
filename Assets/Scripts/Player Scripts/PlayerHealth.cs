@@ -72,7 +72,7 @@ public class PlayerHealth : MonoBehaviour
         gameObject.SetActive(false);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene("Game_Over");
     }
 
     public int GetCurrentLives() => currentLives;
